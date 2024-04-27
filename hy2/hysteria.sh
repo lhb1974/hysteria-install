@@ -221,8 +221,8 @@ inst_pwd(){
 }
 
 inst_site(){
-    read -rp "请输入 Hysteria 2 的伪装网站地址 （去除https://） [回车世嘉maimai日本网站]：" proxysite
-    [[ -z $proxysite ]] && proxysite="maimai.sega.jp"
+    read -rp "请输入 Hysteria 2 的伪装网站地址 （去除https://） [回车必应网站]：" proxysite
+    [[ -z $proxysite ]] && proxysite="www.bing.com"
     yellow "使用在 Hysteria 2 节点的伪装网站为：$proxysite"
 }
 
@@ -244,7 +244,7 @@ insthysteria(){
     fi
     ${PACKAGE_INSTALL} curl wget sudo qrencode procps iptables-persistent netfilter-persistent
 
-    wget -N https://raw.githubusercontent.com/Misaka-blog/hysteria-install/main/hy2/install_server.sh
+    wget -N https://raw.githubusercontent.com/lhb1974/hysteria-install/main/hy2/install_server.sh
     bash install_server.sh
     rm -f install_server.sh
 
@@ -364,9 +364,9 @@ dns:
   nameserver:
     - 8.8.8.8
     - 1.1.1.1
-    - 114.114.114.114
+    - 223.5.5.5
 proxies:
-  - name: Misaka-Hysteria2
+  - name: Hysteria2
     type: hysteria2
     server: $last_ip
     port: $port
@@ -377,15 +377,15 @@ proxy-groups:
   - name: Proxy
     type: select
     proxies:
-      - Misaka-Hysteria2
+      - Hysteria2
       
 rules:
   - GEOIP,CN,DIRECT
   - MATCH,Proxy
 EOF
-    url="hysteria2://$auth_pwd@$last_ip:$last_port/?insecure=1&sni=$hy_domain#Misaka-Hysteria2"
+    url="hysteria2://$auth_pwd@$last_ip:$last_port/?insecure=1&sni=$hy_domain#Hysteria2"
     echo $url > /root/hy/url.txt
-    nohopurl="hysteria2://$auth_pwd@$last_ip:$port/?insecure=1&sni=$hy_domain#Misaka-Hysteria2"
+    nohopurl="hysteria2://$auth_pwd@$last_ip:$port/?insecure=1&sni=$hy_domain#Hysteria2"
     echo $nohopurl > /root/hy/url-nohop.txt
 
     systemctl daemon-reload
@@ -558,24 +558,17 @@ update_core(){
 menu() {
     clear
     echo "#############################################################"
-    echo -e "#                  ${RED}Hysteria 2 一键安装脚本${PLAIN}                  #"
-    echo -e "# ${GREEN}作者${PLAIN}: MisakaNo の 小破站                                  #"
-    echo -e "# ${GREEN}博客${PLAIN}: https://blog.misaka.cyou                            #"
-    echo -e "# ${GREEN}GitHub 项目${PLAIN}: https://github.com/Misaka-blog               #"
-    echo -e "# ${GREEN}GitLab 项目${PLAIN}: https://gitlab.com/Misaka-blog               #"
-    echo -e "# ${GREEN}Telegram 频道${PLAIN}: https://t.me/misakanocchannel              #"
-    echo -e "# ${GREEN}Telegram 群组${PLAIN}: https://t.me/misakanoc                     #"
-    echo -e "# ${GREEN}YouTube 频道${PLAIN}: https://www.youtube.com/@misaka-blog        #"
+    echo -e "#                  ${GREEN}Hysteria 2 一键安装脚本${PLAIN}                  #"
     echo "#############################################################"
     echo ""
-    echo -e " ${GREEN}1.${PLAIN} 安装 Hysteria 2"
+    echo -e " ${GREEN}1.${PLAIN} ${GREEN}安装 Hysteria 2"
     echo -e " ${GREEN}2.${PLAIN} ${RED}卸载 Hysteria 2${PLAIN}"
     echo " -------------"
     echo -e " ${GREEN}3.${PLAIN} 关闭、开启、重启 Hysteria 2"
     echo -e " ${GREEN}4.${PLAIN} 修改 Hysteria 2 配置"
     echo -e " ${GREEN}5.${PLAIN} 显示 Hysteria 2 配置文件"
     echo " -------------"
-    echo -e " ${GREEN}6.${PLAIN} 更新 Hysteria 2 内核"
+    echo -e " ${GREEN}6.${PLAIN} ${GREEN}更新 Hysteria 2 内核"
     echo " -------------"
     echo -e " ${GREEN}0.${PLAIN} 退出脚本"
     echo ""
