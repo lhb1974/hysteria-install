@@ -244,10 +244,9 @@ insthysteria(){
     fi
     ${PACKAGE_INSTALL} curl wget sudo qrencode procps iptables-persistent netfilter-persistent
 
-    wget -N https://raw.githubusercontent.com/apernet/hysteria/blob/master/scripts/install_server.sh
-    bash install_server.sh
+    bash <(curl -fsSL https://get.hy2.sh/)
     rm -f install_server.sh
-
+    
     if [[ -f "/usr/local/bin/hysteria" ]]; then
         green "Hysteria 2 安装成功！"
     else
@@ -570,8 +569,7 @@ showconf(){
 }
 
 update_core(){
-    wget -N https://raw.githubusercontent.com/apernet/hysteria/blob/master/scripts/install_server.sh
-    bash install_server.sh
+    bash <(curl -fsSL https://get.hy2.sh/)
     
     rm -f install_server.sh
 }
