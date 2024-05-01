@@ -244,7 +244,7 @@ insthysteria(){
     fi
     ${PACKAGE_INSTALL} curl wget sudo qrencode procps iptables-persistent netfilter-persistent
 
-    wget -N https://raw.githubusercontent.com/lhb1974/hysteria-install/main/hy2/install_server.sh
+    wget -N https://raw.githubusercontent.com/apernet/hysteria/blob/master/scripts/install_server.sh
     bash install_server.sh
     rm -f install_server.sh
 
@@ -270,10 +270,17 @@ tls:
   key: $key_path
 
 quic:
-  initStreamReceiveWindow: 16777216
-  maxStreamReceiveWindow: 16777216
-  initConnReceiveWindow: 33554432
-  maxConnReceiveWindow: 33554432
+  initStreamReceiveWindow: 8388608
+  maxStreamReceiveWindow: 8388608
+  initConnReceiveWindow: 20971520
+  maxConnReceiveWindow: 20971520
+  maxIdleTimeout: 30s 
+  maxIncomingStreams: 1024 
+  disablePathMTUDiscovery: false
+
+bandwidth: 
+  up: 1000 mbps
+  down: 1000 mbps
 
 auth:
   type: password
@@ -311,13 +318,20 @@ tls:
   insecure: true
 
 quic:
-  initStreamReceiveWindow: 16777216
-  maxStreamReceiveWindow: 16777216
-  initConnReceiveWindow: 33554432
-  maxConnReceiveWindow: 33554432
-
+  initStreamReceiveWindow: 8388608
+  maxStreamReceiveWindow: 8388608
+  initConnReceiveWindow: 20971520
+  maxConnReceiveWindow: 20971520
+  maxIdleTimeout: 30s 
+  maxIncomingStreams: 1024 
+  disablePathMTUDiscovery: false
+  
 fastOpen: true
 
+bandwidth:
+  up: 100 mbps
+  down: 500 mbps
+  
 socks5:
   listen: 127.0.0.1:5080
 
@@ -334,10 +348,17 @@ EOF
     "insecure": true
   },
   "quic": {
-    "initStreamReceiveWindow": 16777216,
-    "maxStreamReceiveWindow": 16777216,
-    "initConnReceiveWindow": 33554432,
-    "maxConnReceiveWindow": 33554432
+    "initStreamReceiveWindow": 8388608,
+    "maxStreamReceiveWindow": 8388608,
+    "initConnReceiveWindow": 20971520,
+    "maxConnReceiveWindow": 20971520,
+    "maxIdleTimeout": 30s,
+    "maxIncomingStreams": 1024,
+    "disablePathMTUDiscovery": false
+  },
+    "bandwidth": {
+    "up": "100 mbps",
+    "down": "500 mbps"
   },
   "fastOpen": true,
   "socks5": {
@@ -549,7 +570,7 @@ showconf(){
 }
 
 update_core(){
-    wget -N https://raw.githubusercontent.com/Misaka-blog/hysteria-install/main/hy2/install_server.sh
+    wget -N https://raw.githubusercontent.com/apernet/hysteria/blob/master/scripts/install_server.sh
     bash install_server.sh
     
     rm -f install_server.sh
